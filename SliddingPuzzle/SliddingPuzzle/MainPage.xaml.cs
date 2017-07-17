@@ -47,6 +47,7 @@ namespace SliddingPuzzle
                     if (i == 3 && j == 3)
                     {
                         buttons[current].Content = "";
+                        empty = buttons[current];
                     }
                     else
                     {
@@ -55,13 +56,58 @@ namespace SliddingPuzzle
                     buttons[current].Name = "btn" + current.ToString();
                     buttons[current].Width = 100;
                     buttons[current].Height = 100;
-                    Grid.SetRow(buttons[current],i);
+                    buttons[current].Click += btn_Click;
+                    Grid.SetRow(buttons[current], i);
                     Grid.SetColumn(buttons[current], j);
                     puzzleGrid.Children.Add(buttons[current]);
                     current++;
                 }
             }
+            mixPuzzle();
         }
-        
+
+        private void btn_Click(object sender, RoutedEventArgs e)
+        {
+            Button clicked = sender as Button;
+
+            int columnSender = Grid.GetColumn(clicked);
+            int rowSender = Grid.GetRow(clicked);
+
+            int columnEmpty = Grid.GetColumn(empty);
+            int rowEmpty = Grid.GetRow(empty);
+
+            if (!(rowSender == rowEmpty && columnSender == columnEmpty)
+                && (rowSender+1 == rowEmpty || rowSender-1 == rowEmpty ) || (columnSender+1 == columnEmpty || columnSender-1 == columnEmpty)) 
+            {
+                swapLocations(clicked, empty);
+            }
+            else
+            {
+                //Wrong move message
+            }
+        }
+
+        private void swapLocations(Button a, Button b)
+        {
+            int columnA = Grid.GetColumn(a);
+            int rowA = Grid.GetRow(a);
+
+            int columnB = Grid.GetColumn(b);
+            int rowB = Grid.GetRow(b);
+
+            Grid.SetColumn(a, columnB);
+            Grid.SetRow(a, rowB);
+
+            Grid.SetColumn(b, columnA);
+            Grid.SetRow(b, rowA);
+        }
+
+        private void mixPuzzle()
+        {
+            for (int i = buttons.Length; i > 1; i--)
+            {
+                swapLocations(buttons[random.Next(i)], buttons[i - 1]);
+            }
+        }
     }
 }
