@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.PlayTo;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -66,7 +67,7 @@ namespace SliddingPuzzle
             mixPuzzle();
         }
 
-        private void btn_Click(object sender, RoutedEventArgs e)
+        private async void btn_Click(object sender, RoutedEventArgs e)
         {
             Button clicked = sender as Button;
 
@@ -76,14 +77,28 @@ namespace SliddingPuzzle
             int columnEmpty = Grid.GetColumn(empty);
             int rowEmpty = Grid.GetRow(empty);
 
-            if (!(rowSender == rowEmpty && columnSender == columnEmpty)
-                && (rowSender+1 == rowEmpty || rowSender-1 == rowEmpty ) || (columnSender+1 == columnEmpty || columnSender-1 == columnEmpty)) 
+            bool isValid = false;
+
+            if (!(rowSender == rowEmpty && columnSender == columnEmpty))
+            {
+
+                if (rowSender == rowEmpty && (columnSender + 1 == columnEmpty || columnSender - 1 == columnEmpty))
+                {
+                    isValid = true;
+                }
+                if (columnSender == columnEmpty && (rowSender + 1 == rowEmpty || rowSender - 1 == rowEmpty))
+                {
+                    isValid = true;
+                }
+            }
+            if (isValid)
             {
                 swapLocations(clicked, empty);
             }
             else
             {
-                //Wrong move message
+                var dialog = new MessageDialog("Oops.......Not a valid move ! ! !");
+                await dialog.ShowAsync();
             }
         }
 
