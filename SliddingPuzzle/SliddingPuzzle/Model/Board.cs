@@ -9,16 +9,23 @@ namespace SliddingPuzzle.Model
     public class Board
     { 
 
-        public Tile[,] Positions { get; set; }
+        public List<Tile> Positions { get; set; }
+
+        public int RowSize { get; set; }
+
+        public int ColumnSize { get; set; }
+
 
         public Board()
         {
-            Positions = new Tile[3,3];
+            Positions = new List<Tile>();
         }
 
-        public Board(int rowSize, int columnSize)
+        public Board(int rowSize,int columnSize)
         {
-            Positions = new Tile[rowSize, columnSize];
+            Positions = new List<Tile>();
+            RowSize = rowSize;
+            ColumnSize = columnSize;
         }
     }
 }

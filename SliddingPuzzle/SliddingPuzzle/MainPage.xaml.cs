@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using SliddingPuzzle.Model;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,46 +26,33 @@ namespace SliddingPuzzle
     public sealed partial class MainPage : Page
     {
         private Button[] buttons = new Button[16];
-        private Button empty; // references one of the buttons in `buttons`
-        private TextBlock clicksLabel;
-        private TextBox moveCountText;
-        private int moveCount = 0;
-        private Random random = new Random();
+        private Puzzle myPuzzle ;
+
 
         public MainPage()
         {
+            this.myPuzzle = new Puzzle(4,4);
             this.InitializeComponent();
             InitialSetup();
         }
 
         private void InitialSetup()
         {
-            int current = 0;
-            for (int i = 0; i < 4; i++)
+            myPuzzle.GenerateNumericBoard();
+            myPuzzle.MixPuzzle();
+            foreach (Tile tile in myPuzzle.PuzzleBoard.Positions)
             {
-                for (int j = 0; j < 4; j++)
-                {
-                    buttons[current] = new Button();
-                    if (i == 3 && j == 3)
-                    {
-                        buttons[current].Content = "";
-                        empty = buttons[current];
-                    }
-                    else
-                    {
-                        buttons[current].Content = current + 1;
-                    }
-                    buttons[current].Name = "btn" + current.ToString();
-                    buttons[current].Width = 100;
-                    buttons[current].Height = 100;
-                    buttons[current].Click += btn_Click;
-                    Grid.SetRow(buttons[current], i);
-                    Grid.SetColumn(buttons[current], j);
-                    puzzleGrid.Children.Add(buttons[current]);
-                    current++;
-                }
+               int current = Convert.ToInt32(tile.Id) - 1;
+                buttons[current] = new Button();
+                buttons[current].Name = "btn" + tile.Id;
+                buttons[current].Width = 100;
+                buttons[current].Height = 100;
+                buttons[current].Content = tile.Value;
+                buttons[current].Click += btn_Click;
+                Grid.SetRow(buttons[current], tile.X);
+                Grid.SetColumn(buttons[current], tile.Y);
+                puzzleGrid.Children.Add(buttons[current]);
             }
-            mixPuzzle();
         }
 
         private async void btn_Click(object sender, RoutedEventArgs e)
@@ -74,26 +62,19 @@ namespace SliddingPuzzle
             int columnSender = Grid.GetColumn(clicked);
             int rowSender = Grid.GetRow(clicked);
 
-            int columnEmpty = Grid.GetColumn(empty);
-            int rowEmpty = Grid.GetRow(empty);
+            int emptyPosition = 0;
 
-            bool isValid = false;
-
-            if (!(rowSender == rowEmpty && columnSender == columnEmpty))
+            if (myPuzzle.CheckMoveValidity(rowSender,columnSender))
             {
-
-                if (rowSender == rowEmpty && (columnSender + 1 == columnEmpty || columnSender - 1 == columnEmpty))
+                myPuzzle.Swap(rowSender,columnSender);
+                for (int i = 0; i < buttons.Length;i++)
                 {
-                    isValid = true;
+                    if (buttons[i].Name == "btn16")
+                    {
+                        emptyPosition = i;
+                    }
                 }
-                if (columnSender == columnEmpty && (rowSender + 1 == rowEmpty || rowSender - 1 == rowEmpty))
-                {
-                    isValid = true;
-                }
-            }
-            if (isValid)
-            {
-                swapLocations(clicked, empty);
+                swapLocations(clicked, buttons[emptyPosition]);
             }
             else
             {
@@ -117,12 +98,5 @@ namespace SliddingPuzzle
             Grid.SetRow(b, rowA);
         }
 
-        private void mixPuzzle()
-        {
-            for (int i = buttons.Length; i > 1; i--)
-            {
-                swapLocations(buttons[random.Next(i)], buttons[i - 1]);
-            }
-        }
     }
 }
