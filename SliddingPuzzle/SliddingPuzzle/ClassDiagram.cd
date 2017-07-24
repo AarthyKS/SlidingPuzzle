@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SliddingPuzzle.Model.Board">
+    <Position X="6" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Model\Board.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SliddingPuzzle.Model.Puzzle">
+    <Position X="9.5" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAEACAAAAAAAAAAAAABAAgAAEAAAAAAABA=</HashCode>
+      <FileName>Model\Puzzle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SliddingPuzzle.Model.Tile" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAACAAAAAAAAAAAAAAAAgAAAAAAAAABgAAAAYAA=</HashCode>
+      <FileName>Model\Tile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
