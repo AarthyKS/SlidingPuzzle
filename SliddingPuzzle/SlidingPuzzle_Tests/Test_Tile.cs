@@ -16,5 +16,15 @@ namespace SlidingPuzzle_Tests
             Assert.AreEqual(0,tile.Y);
             Assert.AreEqual(null,tile.Value);
         }
+
+        [TestMethod]
+        public void Test_Constructor2()
+        {
+            Tile tile = new Tile("test","test",1,1);
+            Assert.AreEqual("test", tile.Id);
+            Assert.AreEqual(1, tile.X);
+            Assert.AreEqual(1, tile.Y);
+            Assert.AreEqual("test", tile.Value);
+        }
     }
 }

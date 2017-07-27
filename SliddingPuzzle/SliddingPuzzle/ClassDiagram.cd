@@ -6,6 +6,9 @@
       <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Model\Board.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Positions" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SliddingPuzzle.Model.Puzzle">
     <Position X="9.5" Y="1.5" Width="2" />
