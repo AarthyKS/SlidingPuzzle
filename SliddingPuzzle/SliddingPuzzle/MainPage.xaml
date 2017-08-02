@@ -26,6 +26,7 @@
                 </Grid.RowDefinitions>
             </Grid>
         </StackPanel>
-    </Grid>
+        <Button x:Name="button" Content="New Game" HorizontalAlignment="Center" Click="button_Click"/>
 
+    </Grid>
 </Page>

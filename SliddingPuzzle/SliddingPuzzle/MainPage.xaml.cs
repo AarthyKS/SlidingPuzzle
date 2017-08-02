@@ -98,5 +98,9 @@ namespace SliddingPuzzle
             Grid.SetRow(b, rowA);
         }
 
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof (MainPage));
+        }
     }
 }
