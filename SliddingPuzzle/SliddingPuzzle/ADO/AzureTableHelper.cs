@@ -15,7 +15,7 @@ namespace SliddingPuzzle.ADO
     {
         private static StorageCredentials cred = new StorageCredentials("puzzle", "f9QhQ2aU6zEGOAI9i4Ek6iJEgwRgYhFCyXtNmtCTO4R4uXwylqbYfaeN/Muyk7tlV3/Z5nFSIzadlLnh+Tt/rQ==");
 
-        public static async void CreateTable()
+        public static async void CreateTable(string name = "player")
         {
             CloudStorageAccount storageAccount =
               CloudStorageAccount.Parse(
@@ -24,7 +24,7 @@ namespace SliddingPuzzle.ADO
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
 
             // Retrieve a reference to the table.
-            CloudTable table = tableClient.GetTableReference("player");
+            CloudTable table = tableClient.GetTableReference(name);
 
             // Create the table if it doesn't exist.
             await table.CreateIfNotExistsAsync();
@@ -43,8 +43,7 @@ namespace SliddingPuzzle.ADO
             CloudTable table = tableClient.GetTableReference("player");
 
             PlayerEntity player1 = new PlayerEntity(player.Username, player.HashedPassword);
-            //customer1.Email = "Walter@contoso.com";
-            //customer1.PhoneNumber = "425-555-0101";
+            
 
             bool ifExists = true;
 

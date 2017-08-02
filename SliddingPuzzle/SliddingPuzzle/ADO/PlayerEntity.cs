@@ -7,14 +7,14 @@ using Microsoft.WindowsAzure.Storage.Table;
 
 namespace SliddingPuzzle.ADO
 {
-   public class PlayerEntity:TableEntity
+   public class PlayerEntity:TableEntity,IPlayer
     {
         public PlayerEntity(string username, string pwd)
         {
             this.PartitionKey = username;
             this.RowKey = pwd;
             Username = username;
-            Pwd = pwd;
+            HashedPassword = pwd;
             BlobUrl = String.Empty;
         }
 
@@ -22,7 +22,7 @@ namespace SliddingPuzzle.ADO
 
         public string Username { get; set; }
 
-        public string Pwd { get; set; }
+        public string HashedPassword { get; set; }
 
         public string BlobUrl { get; set; }
     }

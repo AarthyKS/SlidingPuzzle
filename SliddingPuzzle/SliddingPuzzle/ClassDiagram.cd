@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="SliddingPuzzle.Model.Board">
-    <Position X="6" Y="1.5" Width="1.75" />
+    <Position X="3.75" Y="1.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Model\Board.cs</FileName>
@@ -11,19 +11,52 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SliddingPuzzle.Model.Puzzle">
-    <Position X="9.5" Y="1.5" Width="2" />
+    <Position X="7.25" Y="1.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAgAAAAEACAAAAAAAAAAAAABAAgAAEAAAAAAABA=</HashCode>
       <FileName>Model\Puzzle.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PuzzleBoard" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="SliddingPuzzle.Model.Tile" BaseTypeListCollapsed="true">
-    <Position X="2.5" Y="1.5" Width="2" />
+    <Position X="0.5" Y="1.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAACAAACAAAAAAAAAAAAAAAAgAAAAAAAAABgAAAAYAA=</HashCode>
       <FileName>Model\Tile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="SliddingPuzzle.ADO.AzureTableHelper">
+    <Position X="4.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAACAAAAABAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>ADO\AzureTableHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SliddingPuzzle.ADO.PlayerEntity">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAQAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ADO\PlayerEntity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SliddingPuzzle.Model.Player">
+    <Position X="13" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAQAAAAAgAgAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Player.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="SliddingPuzzle.IPlayer">
+    <Position X="11.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAQAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

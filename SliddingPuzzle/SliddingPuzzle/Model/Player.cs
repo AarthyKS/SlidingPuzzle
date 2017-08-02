@@ -9,7 +9,7 @@ using Windows.Storage.Streams;
 
 namespace SliddingPuzzle.Model
 {
-    public class Player
+    public class Player:IPlayer
     {
         public string Username { get; set; }
 
