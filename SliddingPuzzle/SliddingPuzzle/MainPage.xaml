@@ -5,11 +5,23 @@
     xmlns:local="using:SliddingPuzzle"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interop="using:Windows.UI.Xaml.Interop"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Grid.ColumnSpan="2" Padding="25">
+            <StackPanel.Resources>
+                <Style x:Key="BtnStyle" TargetType="Button">
+                    <Setter Property="Margin" Value="30,30,0,0"/>
+                </Style>
+            </StackPanel.Resources>
             <TextBlock Grid.ColumnSpan="2">Slidding Puzzle</TextBlock>
+            <StackPanel Orientation="Horizontal">
+            <Button x:Name="button" Content="New Game" HorizontalAlignment="Left" Click="button_Click" Style="{StaticResource BtnStyle}"/>
+            <Button x:Name="btnSaveGame" Content="Save Game" HorizontalAlignment="Left" Click="BtnSave_Game_OnClick"  Style="{StaticResource BtnStyle}"></Button>
+            <Button x:Name="btnLoad" Content="Load Saved Game" HorizontalAlignment="Left" Click="btnLoad_Click"  Style="{StaticResource BtnStyle}"/>
+            <Button x:Name="btnSolve" Content="Solve Game" HorizontalAlignment="Left" Click="BtnSolve_OnClick"  Style="{StaticResource BtnStyle}"/>
+            </StackPanel>
             <Grid Name="puzzleGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
@@ -26,7 +38,5 @@
                 </Grid.RowDefinitions>
             </Grid>
         </StackPanel>
-        <Button x:Name="button" Content="New Game" HorizontalAlignment="Center" Click="button_Click"/>
-
     </Grid>
 </Page>

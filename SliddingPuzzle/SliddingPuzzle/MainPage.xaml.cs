@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Newtonsoft.Json;
+using SliddingPuzzle.ADO;
 using SliddingPuzzle.Model;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -31,9 +33,25 @@ namespace SliddingPuzzle
 
         public MainPage()
         {
-            this.myPuzzle = new Puzzle(4,4);
             this.InitializeComponent();
-            InitialSetup();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            var parameters = (Puzzle)e.Parameter;
+
+            if (parameters == null)
+            {
+                this.myPuzzle = new Puzzle(4, 4);
+                InitialSetup();
+            }
+            else
+            {
+                myPuzzle = parameters;
+                LoadSetup();
+            }
         }
 
         private void InitialSetup()
@@ -43,6 +61,23 @@ namespace SliddingPuzzle
             foreach (Tile tile in myPuzzle.PuzzleBoard.Positions)
             {
                int current = Convert.ToInt32(tile.Id) - 1;
+                buttons[current] = new Button();
+                buttons[current].Name = "btn" + tile.Id;
+                buttons[current].Width = 100;
+                buttons[current].Height = 100;
+                buttons[current].Content = tile.Value;
+                buttons[current].Click += btn_Click;
+                Grid.SetRow(buttons[current], tile.X);
+                Grid.SetColumn(buttons[current], tile.Y);
+                puzzleGrid.Children.Add(buttons[current]);
+            }
+        }
+
+        private void LoadSetup()
+        {
+            foreach (Tile tile in myPuzzle.PuzzleBoard.Positions)
+            {
+                int current = Convert.ToInt32(tile.Id) - 1;
                 buttons[current] = new Button();
                 buttons[current].Name = "btn" + tile.Id;
                 buttons[current].Width = 100;
@@ -101,6 +136,48 @@ namespace SliddingPuzzle
         private void button_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof (MainPage));
+        }
+
+        private async void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            Game game = new Game();
+            Player player = new Player();
+            player.Username = App.CurrentUser.Username;
+            player.Password = App.CurrentUser.Password;
+            game.HashedGame = AzureTableHelper.GetPlayer(player).Result.BlobUrl;
+            if (!string.IsNullOrEmpty(game.HashedGame))
+            {
+                Game resGame = AzureTableHelper.GetGame(game).Result;
+                Puzzle saved = (Puzzle) JsonConvert.DeserializeObject(resGame.CurrentGame);
+                this.Frame.Navigate(typeof (MainPage), saved);
+            }
+            else
+            {
+                var dialog = new MessageDialog("Oops.......No saved game ! ! !");
+                await dialog.ShowAsync();
+            }
+        }
+
+        private async void BtnSave_Game_OnClick(object sender, RoutedEventArgs e)
+        {
+            Game currentGame = new Game();
+            currentGame.CurrentGame = JsonConvert.SerializeObject(myPuzzle);
+            currentGame.HashedGame = currentGame.CurrentGame.GetHashCode().ToString();
+
+            await AzureTableHelper.Insert(currentGame);
+            Player player = new Player();
+            player.Password = App.CurrentUser.Password;
+            player.Username = App.CurrentUser.Username;
+            player.BlobUrl = currentGame.HashedGame;
+
+            await AzureTableHelper.Update(player);
+
+            App.CurrentUser.BlobUrl = currentGame.HashedGame;
+        }
+
+        private void BtnSolve_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

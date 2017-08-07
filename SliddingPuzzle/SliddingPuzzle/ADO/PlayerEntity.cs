@@ -25,5 +25,10 @@ namespace SliddingPuzzle.ADO
         public string HashedPassword { get; set; }
 
         public string BlobUrl { get; set; }
+
+        public static implicit operator Task<object>(PlayerEntity v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -38,9 +38,11 @@ namespace SliddingPuzzle
             player.Username = txtUsername.Text;
             player.Password = passwordBox.Password;
 
-            Task<bool> res = AzureTableHelper.Validate(player);
-            if (res.Result)
+            var res = AzureTableHelper.Validate(player).Result;
+            if (res)
             {
+                App.CurrentUser = player;
+
                 this.Frame.Navigate(typeof (MainPage));
             }
             else
@@ -59,6 +61,7 @@ namespace SliddingPuzzle
             Task<bool> res = AzureTableHelper.Insert(player);
             if (res.Result)
             {
+                App.CurrentUser = player;
                 this.Frame.Navigate(typeof(MainPage));
             }
             else
