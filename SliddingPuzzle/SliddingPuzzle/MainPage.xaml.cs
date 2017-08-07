@@ -87,6 +87,10 @@ namespace SliddingPuzzle
                 Grid.SetRow(buttons[current], tile.X);
                 Grid.SetColumn(buttons[current], tile.Y);
                 puzzleGrid.Children.Add(buttons[current]);
+                if (current == 15)
+                {
+                    myPuzzle.EmptyTilePosition = new KeyValuePair<int, int>(tile.X,tile.Y);
+                }
             }
         }
 
@@ -148,7 +152,8 @@ namespace SliddingPuzzle
             if (!string.IsNullOrEmpty(game.HashedGame))
             {
                 Game resGame = AzureTableHelper.GetGame(game).Result;
-                Puzzle saved = (Puzzle) JsonConvert.DeserializeObject(resGame.CurrentGame);
+                Puzzle saved = new Puzzle(4,4);
+                saved.PuzzleBoard=(Board) JsonConvert.DeserializeObject<Board>(resGame.CurrentGame);
                 this.Frame.Navigate(typeof (MainPage), saved);
             }
             else
@@ -161,8 +166,9 @@ namespace SliddingPuzzle
         private async void BtnSave_Game_OnClick(object sender, RoutedEventArgs e)
         {
             Game currentGame = new Game();
-            currentGame.CurrentGame = JsonConvert.SerializeObject(myPuzzle);
+            currentGame.CurrentGame = JsonConvert.SerializeObject(myPuzzle.PuzzleBoard);
             currentGame.HashedGame = currentGame.CurrentGame.GetHashCode().ToString();
+            currentGame.Solution = JsonConvert.SerializeObject(myPuzzle.PuzzleSolution);
 
             await AzureTableHelper.Insert(currentGame);
             Player player = new Player();

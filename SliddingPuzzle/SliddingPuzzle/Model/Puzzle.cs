@@ -16,6 +16,8 @@ namespace SliddingPuzzle.Model
         /// </summary>
         public Board PuzzleBoard { get; set; }
 
+        public Solution PuzzleSolution { get; set; }
+
         /// <summary>
         /// Position of the empty tile (row and column index)
         /// </summary>
@@ -38,6 +40,7 @@ namespace SliddingPuzzle.Model
         {
             PuzzleBoard = new Board(totalRows, totalColumn);
             PuzzleBoard.Positions = new List<Tile>();
+            PuzzleSolution = new Solution();
         }
 
         #endregion
@@ -61,11 +64,11 @@ namespace SliddingPuzzle.Model
                     count++;
                 }
             }
-
         }
 
         public void MixPuzzle()
         {
+            PuzzleSolution.Moves = new List<KeyValuePair<int, int>>();
             for (int i = 0; i < 10; i++)
             {
                 int switchRow = 0;
@@ -110,8 +113,10 @@ namespace SliddingPuzzle.Model
                         }
                         break;
                 }
+                PuzzleSolution.Moves.Add(new KeyValuePair<int, int>(switchRow,switchColumn));
                 Swap(switchRow, switchColumn);
             }
+            PuzzleSolution.InitialPositions = PuzzleBoard.Positions;
         }
 
         public void Swap(int row, int column)

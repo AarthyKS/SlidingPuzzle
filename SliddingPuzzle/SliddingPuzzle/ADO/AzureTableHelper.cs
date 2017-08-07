@@ -219,7 +219,7 @@ namespace SliddingPuzzle.ADO
             if (res.Result != null)
             {
                 game.CurrentGame = ((DynamicTableEntity)res.Result).Properties["CurrentGame"].StringValue;
-                //game.Solution = ((DynamicTableEntity) res.Result).Properties["Solution"].StringValue;
+                game.Solution = ((DynamicTableEntity) res.Result).Properties["Solution"].StringValue;
                 return game;
             }
             return null;

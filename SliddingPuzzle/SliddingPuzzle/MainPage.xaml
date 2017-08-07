@@ -12,7 +12,7 @@
         <StackPanel Grid.ColumnSpan="2" Padding="25">
             <StackPanel.Resources>
                 <Style x:Key="BtnStyle" TargetType="Button">
-                    <Setter Property="Margin" Value="30,30,0,0"/>
+                    <Setter Property="Margin" Value="30,30,30,30"/>
                 </Style>
             </StackPanel.Resources>
             <TextBlock Grid.ColumnSpan="2">Slidding Puzzle</TextBlock>

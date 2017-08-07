@@ -111,6 +111,7 @@
     <Compile Include="Model\Game.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Puzzle.cs" />
+    <Compile Include="Model\Solution.cs" />
     <Compile Include="Model\Tile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
