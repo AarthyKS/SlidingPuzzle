@@ -148,7 +148,7 @@ namespace SliddingPuzzle
             Player player = new Player();
             player.Username = App.CurrentUser.Username;
             player.Password = App.CurrentUser.Password;
-            game.HashedGame = AzureTableHelper.GetPlayer(player).Result.BlobUrl;
+            game.HashedGame = AzureTableHelper.GetPlayer(player).Result.SavedGameId;
             if (!string.IsNullOrEmpty(game.HashedGame))
             {
                 Game resGame = AzureTableHelper.GetGame(game).Result;
@@ -174,11 +174,11 @@ namespace SliddingPuzzle
             Player player = new Player();
             player.Password = App.CurrentUser.Password;
             player.Username = App.CurrentUser.Username;
-            player.BlobUrl = currentGame.HashedGame;
+            player.SavedGameId = currentGame.HashedGame;
 
             await AzureTableHelper.Update(player);
 
-            App.CurrentUser.BlobUrl = currentGame.HashedGame;
+            App.CurrentUser.SavedGameId = currentGame.HashedGame;
         }
 
         private void BtnSolve_OnClick(object sender, RoutedEventArgs e)

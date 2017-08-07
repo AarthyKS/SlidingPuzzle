@@ -14,7 +14,7 @@ namespace SlidingPuzzle_Tests
             PlayerEntity player = new PlayerEntity();
             Assert.AreEqual(null,player.Username);
             Assert.AreEqual(null, player.HashedPassword);
-            Assert.AreEqual(null, player.BlobUrl);
+            Assert.AreEqual(null, player.SavedGameId);
         }
 
         [TestMethod]

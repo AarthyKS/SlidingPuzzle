@@ -20,7 +20,7 @@ namespace SliddingPuzzle.Model
             get { return HashMsg(Password); }
         }
         
-        public string BlobUrl { get; set; }
+        public string SavedGameId { get; set; }
 
         public static String HashMsg(String strMsg,String strAlgName ="SHA256")
         {

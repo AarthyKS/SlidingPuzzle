@@ -166,7 +166,7 @@ namespace SliddingPuzzle.ADO
 
             if (res.Result != null)
             {
-                player.BlobUrl = ((DynamicTableEntity) res.Result).Properties["BlobUrl"].StringValue;
+                player.SavedGameId = ((DynamicTableEntity) res.Result).Properties["SavedGameId"].StringValue;
                 return player;
             }
             return null;
@@ -186,7 +186,7 @@ namespace SliddingPuzzle.ADO
             CloudTable table = tableClient.GetTableReference("player");
 
             PlayerEntity player1 = new PlayerEntity(player.Username, player.HashedPassword);
-            player1.BlobUrl = player.BlobUrl;
+            player1.SavedGameId = player.SavedGameId;
 
             TableOperation operation = TableOperation.InsertOrMerge(player1);
 

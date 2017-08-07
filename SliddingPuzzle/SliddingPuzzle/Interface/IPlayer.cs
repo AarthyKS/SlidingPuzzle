@@ -12,6 +12,6 @@ namespace SliddingPuzzle
 
         string HashedPassword { get; }
 
-       string BlobUrl { get; set; }
+       string SavedGameId { get; set; }
     }
 }

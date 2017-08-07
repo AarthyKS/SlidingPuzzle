@@ -14,7 +14,7 @@ namespace SlidingPuzzle_Tests
             {
                 Username = "Test",
                 Password = "Test",
-                BlobUrl = "https://test.com"
+                SavedGameId = "https://test.com"
             };
             Assert.IsTrue(!String.IsNullOrEmpty(player.HashedPassword));
         }
@@ -26,7 +26,7 @@ namespace SlidingPuzzle_Tests
             {
                 Username = "Test",
                 Password = "Test",
-                BlobUrl = "https://test.com"
+                SavedGameId = "https://test.com"
             };
             string hash = Player.HashMsg("Test");
             Assert.AreEqual(hash,player.HashedPassword);

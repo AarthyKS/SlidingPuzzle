@@ -15,7 +15,7 @@ namespace SliddingPuzzle.ADO
             this.RowKey = pwd;
             Username = username;
             HashedPassword = pwd;
-            BlobUrl = String.Empty;
+            SavedGameId = String.Empty;
         }
 
         public PlayerEntity() { }
@@ -24,7 +24,7 @@ namespace SliddingPuzzle.ADO
 
         public string HashedPassword { get; set; }
 
-        public string BlobUrl { get; set; }
+        public string SavedGameId { get; set; }
 
         public static implicit operator Task<object>(PlayerEntity v)
         {
