@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.PlayTo;
+using Windows.UI.Core;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,7 +31,7 @@ namespace SliddingPuzzle
     public sealed partial class MainPage : Page
     {
         private Button[] buttons = new Button[16];
-        private Puzzle myPuzzle ;
+        private Puzzle myPuzzle;
 
 
         public MainPage()
@@ -40,7 +43,7 @@ namespace SliddingPuzzle
         {
             base.OnNavigatedTo(e);
 
-            var parameters = (Puzzle)e.Parameter;
+            var parameters = (Puzzle) e.Parameter;
 
             if (parameters == null)
             {
@@ -60,7 +63,7 @@ namespace SliddingPuzzle
             myPuzzle.MixPuzzle();
             foreach (Tile tile in myPuzzle.PuzzleBoard.Positions)
             {
-               int current = Convert.ToInt32(tile.Id) - 1;
+                int current = Convert.ToInt32(tile.Id) - 1;
                 buttons[current] = new Button();
                 buttons[current].Name = "btn" + tile.Id;
                 buttons[current].Width = 100;
@@ -89,7 +92,7 @@ namespace SliddingPuzzle
                 puzzleGrid.Children.Add(buttons[current]);
                 if (current == 15)
                 {
-                    myPuzzle.EmptyTilePosition = new KeyValuePair<int, int>(tile.X,tile.Y);
+                    myPuzzle.EmptyTilePosition = new KeyValuePair<int, int>(tile.X, tile.Y);
                 }
             }
         }
@@ -103,10 +106,10 @@ namespace SliddingPuzzle
 
             int emptyPosition = 0;
 
-            if (myPuzzle.CheckMoveValidity(rowSender,columnSender))
+            if (myPuzzle.CheckMoveValidity(rowSender, columnSender))
             {
-                myPuzzle.Swap(rowSender,columnSender);
-                for (int i = 0; i < buttons.Length;i++)
+                myPuzzle.Swap(rowSender, columnSender);
+                for (int i = 0; i < buttons.Length; i++)
                 {
                     if (buttons[i].Name == "btn16")
                     {
@@ -152,8 +155,9 @@ namespace SliddingPuzzle
             if (!string.IsNullOrEmpty(game.HashedGame))
             {
                 Game resGame = AzureTableHelper.GetGame(game).Result;
-                Puzzle saved = new Puzzle(4,4);
-                saved.PuzzleBoard=(Board) JsonConvert.DeserializeObject<Board>(resGame.CurrentGame);
+                Puzzle saved = new Puzzle(4, 4);
+                saved.PuzzleBoard = (Board) JsonConvert.DeserializeObject<Board>(resGame.CurrentGame);
+                saved.PuzzleSolution = (Solution) JsonConvert.DeserializeObject<Solution>(resGame.Solution);
                 this.Frame.Navigate(typeof (MainPage), saved);
             }
             else
@@ -181,9 +185,64 @@ namespace SliddingPuzzle
             App.CurrentUser.SavedGameId = currentGame.HashedGame;
         }
 
-        private void BtnSolve_OnClick(object sender, RoutedEventArgs e)
+        private async void BtnSolve_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            Puzzle passParameter = new Puzzle(myPuzzle.PuzzleBoard.RowSize, myPuzzle.PuzzleBoard.ColumnSize);
+            passParameter.PuzzleBoard.Positions = myPuzzle.PuzzleSolution.InitialPositions;
+            passParameter.PuzzleSolution = myPuzzle.PuzzleSolution;
+            var currentAV = ApplicationView.GetForCurrentView();
+            var newAV = CoreApplication.CreateNewView();
+            await newAV.Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal,
+                async () =>
+                {
+                    var newWindow = Window.Current;
+                    var newAppView = ApplicationView.GetForCurrentView();
+                    newAppView.Title = "Solve window";
+
+                    var frame = new Frame();
+                    frame.Navigate(typeof (SolvePage), passParameter);
+                    newWindow.Content = frame;
+                    newWindow.Activate();
+
+                    await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+                        newAppView.Id,
+                        ViewSizePreference.UseMinimum,
+                        currentAV.Id,
+                        ViewSizePreference.UseMinimum);
+                });
+        }
+
+        private async void BtnSolveAI_OnClick(object sender, RoutedEventArgs e)
+        {
+            List<KeyValuePair<int, int>> solution = AIHelper.SolveWithAI(myPuzzle.PuzzleBoard.Positions);
+
+            Puzzle passParameter = new Puzzle(myPuzzle.PuzzleBoard.RowSize, myPuzzle.PuzzleBoard.ColumnSize);
+            passParameter.PuzzleBoard.Positions = myPuzzle.PuzzleBoard.Positions;
+            passParameter.PuzzleSolution = new Solution();
+            passParameter.PuzzleSolution.Moves = solution;
+            passParameter.PuzzleSolution.InitialPositions = myPuzzle.PuzzleBoard.Positions;
+            var currentAV = ApplicationView.GetForCurrentView();
+            var newAV = CoreApplication.CreateNewView();
+            await newAV.Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal,
+                async () =>
+                {
+                    var newWindow = Window.Current;
+                    var newAppView = ApplicationView.GetForCurrentView();
+                    newAppView.Title = "Solve window";
+
+                    var frame = new Frame();
+                    frame.Navigate(typeof (SolvePage), passParameter);
+                    newWindow.Content = frame;
+                    newWindow.Activate();
+
+                    await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+                        newAppView.Id,
+                        ViewSizePreference.UseMinimum,
+                        currentAV.Id,
+                        ViewSizePreference.UseMinimum);
+                });
         }
     }
 }

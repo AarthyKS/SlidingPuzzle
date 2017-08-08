@@ -69,43 +69,43 @@ namespace SliddingPuzzle.Model
         public void MixPuzzle()
         {
             PuzzleSolution.Moves = new List<KeyValuePair<int, int>>();
-            for (int i = 0; i < 10; i++)
+            int rand = new Random().Next(0, 1);
+            int rand2 = new Random().Next(0,1);
+            for (int i = 0; i < new Random().Next(5,35); i++)
             {
                 int switchRow = 0;
                 int switchColumn = 0;
-                int rand = new Random().Next();
                 rand = rand%2;
                 switch (rand)
                 {
-                    case 1:
+                    case 0:
                         switchColumn = EmptyTilePosition.Value;
-                        rand = new Random().Next();
-                        rand = rand%4;
-                        switch (rand)
+                        rand2 = rand2%2;
+                        switch (rand2)
                         {
-                            case 1:
+                            case 0:
                                 switchRow = EmptyTilePosition.Key - 1 >= 0
                                     ? EmptyTilePosition.Key - 1
                                     : EmptyTilePosition.Key + 1;
                                 break;
-                            case 2:
+                            case 1:
                                 switchRow = EmptyTilePosition.Key + 1 < PuzzleBoard.ColumnSize
                                     ? EmptyTilePosition.Key + 1
                                     : EmptyTilePosition.Key - 1;
                                 break;
                         }
                         break;
-                    case 2:
+                    case 1:
                         switchRow = EmptyTilePosition.Key;
-                        rand = new Random().Next(1, 2);
-                        switch (rand)
+                        rand2 = rand2%2;
+                        switch (rand2)
                         {
-                            case 1:
+                            case 0:
                                 switchColumn = EmptyTilePosition.Value - 1 >= 0
                                     ? EmptyTilePosition.Value - 1
                                     : EmptyTilePosition.Value + 1;
                                 break;
-                            case 2:
+                            case 1:
                                 switchColumn = EmptyTilePosition.Value + 1 < PuzzleBoard.RowSize
                                     ? EmptyTilePosition.Value + 1
                                     : EmptyTilePosition.Value - 1;
@@ -115,6 +115,8 @@ namespace SliddingPuzzle.Model
                 }
                 PuzzleSolution.Moves.Add(new KeyValuePair<int, int>(switchRow,switchColumn));
                 Swap(switchRow, switchColumn);
+                rand++;
+                rand2++;
             }
             PuzzleSolution.InitialPositions = PuzzleBoard.Positions;
         }
