@@ -32,7 +32,7 @@
   <Class Name="SliddingPuzzle.ADO.PlayerEntity">
     <Position X="10" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAACAAAQAAAAAgAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAgAAAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>ADO\PlayerEntity.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -40,7 +40,7 @@
   <Class Name="SliddingPuzzle.Model.Player">
     <Position X="13" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAACAAAQAAAAAgAgAAAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAgAgAAAAACAAAAAAABAAA=</HashCode>
       <FileName>Model\Player.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -64,14 +64,21 @@
   <Class Name="SliddingPuzzle.Model.Solution">
     <Position X="7.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAgAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAEAAAgAAAAAAAAA=</HashCode>
       <FileName>Model\Solution.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SliddingPuzzle.ADO.AIHelper">
+    <Position X="0.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ADO\AIHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="SliddingPuzzle.IPlayer">
     <Position X="11.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAACAAAQAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAgAAAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>Interface\IPlayer.cs</FileName>
     </TypeIdentifier>
   </Interface>

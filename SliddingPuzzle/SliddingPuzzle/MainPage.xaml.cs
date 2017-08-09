@@ -183,6 +183,9 @@ namespace SliddingPuzzle
             await AzureTableHelper.Update(player);
 
             App.CurrentUser.SavedGameId = currentGame.HashedGame;
+
+            var dialog = new MessageDialog("Game saved!!!!!!!");
+            await dialog.ShowAsync();
         }
 
         private async void BtnSolve_OnClick(object sender, RoutedEventArgs e)

@@ -92,5 +92,66 @@ namespace SlidingPuzzle_Tests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public void Test_InsertGame()
+        {
+            InsertGetGame();
+        }
+
+        private async void InsertGetGame()
+        {
+            try
+            {
+                Game game = new Game();
+                game.CurrentGame = DateTime.Now.ToString();
+                game.Solution = DateTime.Now.ToString();
+                game.HashedGame = DateTime.Now.ToString().GetHashCode().ToString();
+
+                var res = AzureTableHelper.Insert(game).Result;
+                await Task.Delay(TimeSpan.FromSeconds(45));
+
+                var res2 = AzureTableHelper.GetGame(game).Result;
+                await Task.Delay(TimeSpan.FromSeconds(45));
+
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+
+            }
+        }
+
+        [TestMethod]
+        public void Test_GetPlayer()
+        {
+            GetUpdatePlayer();
+        }
+
+        private async void GetUpdatePlayer()
+        {
+            try
+            {
+                Player player = new Player
+                {
+                    Username = DateTime.Now.ToString("MMddyyHHmmss"),
+                    Password = "testing"
+                };
+                var res = AzureTableHelper.GetPlayer(player).Result;
+                await Task.Delay(TimeSpan.FromSeconds(45));
+
+                player.Password = "testing1";
+
+                res = AzureTableHelper.Update(player).Result;
+                await Task.Delay(TimeSpan.FromSeconds(45));
+
+            }
+            catch (Exception ex)
+            {
+
+                Assert.Fail(ex.Message);
+            }
+        }
+
     }
 }
