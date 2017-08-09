@@ -29,7 +29,7 @@ namespace SliddingPuzzle
         public Login()
         {
             this.InitializeComponent();
-            AzureTableHelper.CreateTable();
+            //AzureTableHelper.CreateTable();
         }
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
