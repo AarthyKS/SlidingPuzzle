@@ -37,19 +37,28 @@ namespace SliddingPuzzle
             Player player = new Player();
             player.Username = txtUsername.Text;
             player.Password = passwordBox.Password;
-
-            var res = AzureTableHelper.Validate(player).Result;
-            if (res)
+            if (!String.IsNullOrEmpty(player.Username) && !String.IsNullOrEmpty(player.Password) && player.Username.Length >= 4 && player.Password.Length >=6)
             {
-                App.CurrentUser = player;
 
-                this.Frame.Navigate(typeof (MainPage));
+                var res = AzureTableHelper.Validate(player).Result;
+                if (res)
+                {
+                    App.CurrentUser = player;
+
+                    this.Frame.Navigate(typeof (MainPage));
+                }
+                else
+                {
+                    var dialog = new MessageDialog("Oops.......Not a valid username & passworrd ! ! !");
+                    await dialog.ShowAsync();
+                }
             }
             else
             {
-                var dialog = new MessageDialog("Oops.......Not a valid username & passworrd ! ! !");
+                var dialog = new MessageDialog("Enter valid username & password");
                 await dialog.ShowAsync();
             }
+
         }
 
         private async void btnRegister_Click(object sender, RoutedEventArgs e)
@@ -58,15 +67,25 @@ namespace SliddingPuzzle
             player.Username = txtUsername.Text;
             player.Password = passwordBox.Password;
 
-            Task<bool> res = AzureTableHelper.Insert(player);
-            if (res.Result)
+            if (!String.IsNullOrEmpty(player.Username) && !String.IsNullOrEmpty(player.Password) &&
+                player.Username.Length >= 4 && player.Password.Length >= 6)
             {
-                App.CurrentUser = player;
-                this.Frame.Navigate(typeof(MainPage));
+
+                Task<bool> res = AzureTableHelper.Insert(player);
+                if (res.Result)
+                {
+                    App.CurrentUser = player;
+                    this.Frame.Navigate(typeof (MainPage));
+                }
+                else
+                {
+                    var dialog = new MessageDialog("Oops.......Username already taken. Try different name ! ! !");
+                    await dialog.ShowAsync();
+                }
             }
             else
             {
-                var dialog = new MessageDialog("Oops.......Username already taken. Try different name ! ! !");
+                var dialog = new MessageDialog("Enter valid username & password");
                 await dialog.ShowAsync();
             }
         }

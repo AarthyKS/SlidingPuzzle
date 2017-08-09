@@ -60,12 +60,24 @@ namespace SliddingPuzzle
                 }
             }
 
-            for (int i = myPuzzle.PuzzleSolution.Moves.Count - 1; i >= 0; i--)
+            if (!myPuzzle.PuzzleSolution.isAI)
             {
-                await Task.Delay(TimeSpan.FromSeconds(1));
-                Move(myPuzzle.PuzzleSolution.Moves[i].Key, myPuzzle.PuzzleSolution.Moves[i].Value);
+                for (int i = myPuzzle.PuzzleSolution.Moves.Count - 1; i >= 0; i--)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    Move(myPuzzle.PuzzleSolution.Moves[i].Key, myPuzzle.PuzzleSolution.Moves[i].Value);
+                }
+                Move(3, 3);
             }
-            Move(3,3);
+            else
+            {
+                for (int i = 0; i <= myPuzzle.PuzzleSolution.Moves.Count - 1; i++)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    Move(myPuzzle.PuzzleSolution.Moves[i].Key, myPuzzle.PuzzleSolution.Moves[i].Value);
+                }
+                Move(3, 3);
+            }
         }
         private async void Move(int x, int y)
         {

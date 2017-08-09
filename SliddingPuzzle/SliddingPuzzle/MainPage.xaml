@@ -22,6 +22,7 @@
             <Button x:Name="btnLoad" Content="Load Saved Game" HorizontalAlignment="Left" Click="btnLoad_Click"  Style="{StaticResource BtnStyle}"/>
             <Button x:Name="btnSolve" Content="Solve Game" HorizontalAlignment="Left" Click="BtnSolve_OnClick"  Style="{StaticResource BtnStyle}"/>
             <Button x:Name="btnSolveAI" Content="Solve Game(AI)" HorizontalAlignment="Left" Click="BtnSolveAI_OnClick"  Style="{StaticResource BtnStyle}"/>
+                <Button x:Name="btnLogout" Content="Logout" HorizontalAlignment="Left" Click="BtnLogout_OnClick"  Style="{StaticResource BtnStyle}"/>
             </StackPanel>
             <Grid Name="puzzleGrid">
                 <Grid.ColumnDefinitions>

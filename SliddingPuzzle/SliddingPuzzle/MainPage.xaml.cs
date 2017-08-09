@@ -221,6 +221,7 @@ namespace SliddingPuzzle
             passParameter.PuzzleBoard.Positions = myPuzzle.PuzzleBoard.Positions;
             passParameter.PuzzleSolution = new Solution();
             passParameter.PuzzleSolution.Moves = solution;
+            passParameter.PuzzleSolution.isAI = true;
             passParameter.PuzzleSolution.InitialPositions = myPuzzle.PuzzleBoard.Positions;
             var currentAV = ApplicationView.GetForCurrentView();
             var newAV = CoreApplication.CreateNewView();
@@ -243,6 +244,12 @@ namespace SliddingPuzzle
                         currentAV.Id,
                         ViewSizePreference.UseMinimum);
                 });
+        }
+
+        private void BtnLogout_OnClick(object sender, RoutedEventArgs e)
+        {
+            App.CurrentUser = null;
+            this.Frame.Navigate(typeof(Login));
         }
     }
 }

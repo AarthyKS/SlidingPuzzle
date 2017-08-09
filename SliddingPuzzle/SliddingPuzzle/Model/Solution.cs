@@ -10,5 +10,7 @@ namespace SliddingPuzzle.Model
     {
         public List<Tile> InitialPositions { get; set; }
         public List<KeyValuePair<int,int>> Moves { get; set; } 
+
+        public bool isAI { get; set; }
     }
 }

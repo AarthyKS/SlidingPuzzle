@@ -41,37 +41,55 @@ namespace SliddingPuzzle.ADO
 
                 if (emptyPosition.Key + 1 <= 3)
                 {
-                    options.Add(Swap(emptyPosition.Key+1,emptyPosition.Value,emptyPosition.Key,emptyPosition.Value, initialPosition.Select(tile => new Tile() {Id = tile.Id,Value = tile.Value,X= tile.X,Y= tile.Y}).ToList()));
+                    options.Add(Swap(emptyPosition.Key + 1, emptyPosition.Value, emptyPosition.Key, emptyPosition.Value,
+                        initialPosition.Select(
+                            tile => new Tile() {Id = tile.Id, Value = tile.Value, X = tile.X, Y = tile.Y}).ToList()));
                 }
+                else
+                    options.Add(new List<Tile>());
 
                 if (emptyPosition.Key - 1 >= 0)
                 {
                     options.Add(Swap(emptyPosition.Key - 1, emptyPosition.Value, emptyPosition.Key, emptyPosition.Value, initialPosition.Select(tile => new Tile() { Id = tile.Id, Value = tile.Value, X = tile.X, Y = tile.Y }).ToList()));
                 }
+                else
+                    options.Add(new List<Tile>());
                 if (emptyPosition.Value + 1 <= 3)
                 {
                     options.Add(Swap(emptyPosition.Key , emptyPosition.Value+1, emptyPosition.Key, emptyPosition.Value, initialPosition.Select(tile => new Tile() { Id = tile.Id, Value = tile.Value, X = tile.X, Y = tile.Y }).ToList()));
                 }
+                else
+                    options.Add(new List<Tile>());
 
                 if (emptyPosition.Value - 1 >= 0)
                 {
                     options.Add(Swap(emptyPosition.Key, emptyPosition.Value-1, emptyPosition.Key, emptyPosition.Value, initialPosition.Select(tile => new Tile() { Id = tile.Id, Value = tile.Value, X = tile.X, Y = tile.Y }).ToList()));
                 }
+                else
+                    options.Add(new List<Tile>());
 
                 List<int> lstCount = new List<int>();
                 foreach (var possibilities in options)
                 {
-                    int count = 0;
-                    int i = 0;
-                    foreach (var tile in possibilities)
+                    if (possibilities.Any())
                     {
-                        if ((tile.X != completed[i].Key || tile.Y != completed[i].Value))
+                        int count = 0;
+                        int i = 0;
+                        foreach (var tile in possibilities)
                         {
-                            count++;
+                            if ((tile.X != completed[i].Key || tile.Y != completed[i].Value))
+                            {
+                                count++;
+                            }
+                            i++;
                         }
-                        i++;
+                        lstCount.Add(count);
                     }
-                    lstCount.Add(count);
+                    else
+                    {
+                        lstCount.Add(100000);
+                    }
+
                 }
 
                 min = lstCount.Min();
